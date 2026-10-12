@@ -1,0 +1,709 @@
+.peticiones-page {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.peticiones-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.peticiones-header h1 {
+  margin: 4px 0 6px;
+  font-size: 28px;
+  font-weight: 900;
+  color: #1e293b;
+}
+
+.peticiones-header p {
+  margin: 0;
+  font-size: 15px;
+  color: #64748b;
+}
+
+.peticiones-label {
+  margin: 0;
+  font-size: 12px !important;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #0f766e !important;
+}
+
+.peticiones-refresh {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.peticiones-refresh:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+/* KPI */
+
+.peticiones-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.peticion-kpi {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 3px 14px rgba(15, 23, 42, 0.04);
+}
+
+.peticion-kpi span {
+  display: block;
+  margin-bottom: 8px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.peticion-kpi strong {
+  display: block;
+  color: #0f172a;
+  font-size: 29px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.peticion-kpi.pending strong {
+  color: #b45309;
+}
+
+.peticion-kpi.approved strong {
+  color: #047857;
+}
+
+.peticion-kpi.rejected strong {
+  color: #b91c1c;
+}
+
+/* PESTAÑAS PRINCIPALES */
+
+.peticion-main-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #dbe3ea;
+}
+
+.peticion-main-tab {
+  position: relative;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  background: transparent;
+  padding: 13px 20px;
+  margin-bottom: -1px;
+  border-radius: 10px 10px 0 0;
+  color: #64748b;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.peticion-main-tab:hover {
+  color: #12574c;
+}
+
+.peticion-main-tab.active {
+  background: #ffffff;
+  color: #12574c;
+  border-color: #dbe3ea;
+}
+
+.peticion-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  margin-left: 8px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.peticion-main-tab.active .peticion-tab-count {
+  background: #12574c;
+  color: #ffffff;
+}
+
+/* CARPETAS DE DEPARTAMENTO */
+
+.peticion-folder-wrapper {
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.peticion-folders {
+  display: flex;
+  gap: 8px;
+  min-width: max-content;
+}
+
+.peticion-folder {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #dbe3ea;
+  background: #f8fafc;
+  border-radius: 10px 10px 4px 4px;
+  padding: 10px 14px;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.peticion-folder:hover {
+  border-color: #94a3b8;
+  background: #ffffff;
+}
+
+.peticion-folder.active {
+  color: #ffffff;
+  background: #12574c;
+  border-color: #12574c;
+}
+
+.peticion-folder-badge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #dc2626;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.peticion-folder.active .peticion-folder-badge {
+  background: #ffffff;
+  color: #b91c1c;
+}
+
+/* FILTROS */
+
+.peticion-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.peticion-toolbar-left {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.peticion-select,
+.peticion-search {
+  min-height: 42px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 14px;
+  padding: 0 12px;
+  outline: none;
+}
+
+.peticion-select:focus,
+.peticion-search:focus {
+  border-color: #12574c;
+  box-shadow: 0 0 0 3px rgba(18, 87, 76, 0.08);
+}
+
+.peticion-search {
+  min-width: 250px;
+}
+
+/* TABLA */
+
+.peticion-table-card {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 3px 16px rgba(15, 23, 42, 0.04);
+}
+
+.peticion-table-scroll {
+  overflow-x: auto;
+}
+
+.peticion-table {
+  width: 100%;
+  min-width: 1120px;
+  border-collapse: collapse;
+}
+
+.peticion-table thead {
+  background: #f8fafc;
+}
+
+.peticion-table th {
+  padding: 13px 15px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #475569;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.peticion-table td {
+  padding: 15px;
+  border-bottom: 1px solid #eef2f7;
+  color: #334155;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.peticion-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.peticion-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.peticion-person {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.peticion-person strong {
+  color: #0f172a;
+  font-size: 14px;
+}
+
+.peticion-person span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.peticion-department strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #334155;
+}
+
+.peticion-department span {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.peticion-activities {
+  display: block;
+  max-width: 270px;
+  overflow: hidden;
+  color: #475569;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ESTADOS */
+
+.peticion-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.peticion-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.peticion-status.approved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.peticion-status.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.peticion-status.cancelled {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.peticion-status.interview {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.peticion-status.accepted {
+  background: #ccfbf1;
+  color: #115e59;
+}
+
+.peticion-status.not-selected {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.peticion-btn-review {
+  border: 0;
+  border-radius: 8px;
+  background: #12574c;
+  color: #ffffff;
+  padding: 8px 13px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.peticion-btn-review:hover {
+  background: #0c463e;
+}
+
+/* VACÍO Y CARGA */
+
+.peticion-empty,
+.peticion-loading,
+.peticion-error {
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.peticion-empty strong,
+.peticion-loading strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #334155;
+  font-size: 17px;
+}
+
+.peticion-empty p,
+.peticion-loading p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.peticion-error {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #991b1b;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* MODAL */
+
+.peticion-modal-overlay {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.58);
+  backdrop-filter: blur(3px);
+}
+
+.peticion-modal {
+  width: 100%;
+  max-width: 850px;
+  max-height: 92vh;
+  overflow-y: auto;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.25);
+}
+
+.peticion-modal.small {
+  max-width: 610px;
+}
+
+.peticion-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.peticion-modal-header h2 {
+  margin: 3px 0 0;
+  color: #0f172a;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.peticion-modal-close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.peticion-modal-body {
+  padding: 24px;
+}
+
+.peticion-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.peticion-detail {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  padding: 13px 15px;
+}
+
+.peticion-detail.full {
+  grid-column: 1 / -1;
+}
+
+.peticion-detail span {
+  display: block;
+  margin-bottom: 5px;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.peticion-detail strong,
+.peticion-detail p {
+  margin: 0;
+  color: #1e293b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.peticion-activity-box {
+  margin-top: 8px;
+  border-left: 4px solid #12574c;
+  background: #f0fdfa;
+  border-radius: 8px;
+  padding: 15px 17px;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.peticion-modal-section-title {
+  margin: 22px 0 10px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+/* ACCIONES */
+
+.peticion-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 18px 24px;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.peticion-btn {
+  min-height: 42px;
+  border-radius: 9px;
+  padding: 0 17px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.peticion-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.peticion-btn.secondary {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #475569;
+}
+
+.peticion-btn.approve {
+  border: 1px solid #047857;
+  background: #047857;
+  color: #ffffff;
+}
+
+.peticion-btn.reject {
+  border: 1px solid #b91c1c;
+  background: #ffffff;
+  color: #b91c1c;
+}
+
+.peticion-btn.interview {
+  border: 1px solid #1d4ed8;
+  background: #1d4ed8;
+  color: #ffffff;
+}
+
+.peticion-btn.accept {
+  border: 1px solid #12574c;
+  background: #12574c;
+  color: #ffffff;
+}
+
+/* TEXTAREA */
+
+.peticion-form-group {
+  margin-bottom: 18px;
+}
+
+.peticion-form-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.peticion-textarea {
+  display: block;
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 13px 14px;
+  color: #334155;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.55;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.peticion-textarea:focus {
+  border-color: #12574c;
+  box-shadow: 0 0 0 3px rgba(18, 87, 76, 0.08);
+}
+
+.peticion-character-count {
+  display: block;
+  margin-top: 6px;
+  color: #94a3b8;
+  text-align: right;
+  font-size: 11px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+  .peticiones-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .peticiones-header {
+    flex-direction: column;
+  }
+
+  .peticiones-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .peticion-main-tabs {
+    overflow-x: auto;
+  }
+
+  .peticion-main-tab {
+    min-width: max-content;
+  }
+
+  .peticion-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .peticion-toolbar-left {
+    flex-direction: column;
+  }
+
+  .peticion-select,
+  .peticion-search {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .peticion-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .peticion-detail.full {
+    grid-column: auto;
+  }
+
+  .peticion-modal-overlay {
+    padding: 10px;
+  }
+
+  .peticion-actions {
+    flex-direction: column-reverse;
+  }
+
+  .peticion-btn {
+    width: 100%;
+  }
+}

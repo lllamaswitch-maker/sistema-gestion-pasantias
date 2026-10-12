@@ -1,0 +1,228 @@
+/* =========================================================================
+   ESTILOS INSTITUCIONALES - DASHBOARD RRHH MI TELEFÉRICO (#114d3f)
+   ========================================================================= */
+
+/* Fondo envolvente general con degradado suave */
+.dashboard-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #e6f3ee 0%, #d8eade 50%, #cadfd1 100%);
+}
+
+/* Canvas flotante con sombra suave */
+.dashboard-canvas {
+  width: 100%;
+  max-width: 80rem;
+  min-height: 750px;
+  background: #f8faf9;
+  border-radius: 2.25rem;
+  display: flex;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 25px 60px -15px rgba(17, 77, 63, 0.18);
+}
+
+/* Barra lateral con degradado corporativo */
+.sidebar-corporate {
+  width: 16rem;
+  background: linear-gradient(180deg, #114d3f 0%, #0d3a2f 100%);
+  color: #ffffff;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Contenedor del Avatar/Logo */
+.avatar-container {
+  width: 4.75rem;
+  height: 4.75rem;
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  padding: 0.25rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Items del menú lateral */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.875rem;
+  color: #c9e8dc;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.nav-item.active {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 100%);
+  color: #ffffff;
+  border-left: 3px solid #34d399;
+}
+
+/* Botón de Logout */
+.btn-logout {
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.12);
+  color: #fca5a5;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.btn-logout:hover {
+  background: rgba(239, 68, 68, 0.22);
+}
+
+/* Icono menú superior */
+.header-icon-box {
+  width: 2.25rem;
+  height: 2.25rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* KPI Destacado Verde */
+.kpi-card-featured {
+  background: linear-gradient(135deg, #114d3f 0%, #092c24 100%);
+  color: #ffffff;
+  padding: 1.25rem;
+  border-radius: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 7rem;
+  box-shadow: 0 10px 20px -5px rgba(17, 77, 63, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.kpi-icon-pill-featured {
+  width: 1.625rem;
+  height: 1.625rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* KPIs Normales */
+.kpi-card {
+  background: #ffffff;
+  padding: 1.25rem;
+  border-radius: 1.25rem;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 7rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+}
+
+.kpi-icon-pill {
+  width: 1.625rem;
+  height: 1.625rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tarjetas de Gráficos */
+.chart-card {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px -10px rgba(17, 77, 63, 0.05);
+}
+
+.badge-tag {
+  font-size: 0.625rem;
+  font-weight: 700;
+  font-family: monospace;
+  padding: 0.25rem 0.625rem;
+  background: #ecfdf5;
+  color: #047857;
+  border-radius: 0.5rem;
+  border: 1px solid #a7f3d0;
+}
+
+/* Mini Calendario */
+.calendar-day {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  border-radius: 0.5rem;
+  font-family: monospace;
+  transition: all 0.15s ease;
+}
+
+.day-selected {
+  background: #114d3f;
+  color: #ffffff;
+  font-weight: 900;
+}
+
+.day-highlight {
+  background: #34d399;
+  color: #064e3b;
+  font-weight: 900;
+}
+
+.day-normal {
+  color: #475569;
+}
+
+.day-normal:hover {
+  background: #f1f5f9;
+}
+
+/* Botón de acción verde */
+.btn-action-green {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.625rem;
+  background: linear-gradient(135deg, #114d3f 0%, #166534 100%);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 0.875rem;
+  box-shadow: 0 4px 12px rgba(17, 77, 63, 0.25);
+  transition: all 0.2s;
+}
+
+.btn-action-green:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.btn-action-green:active {
+  transform: scale(0.98);
+}

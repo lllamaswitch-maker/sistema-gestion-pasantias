@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================================
+   PALETA EXACTA - MI TELEFÉRICO (#12574c) CON OLAS DE TONO VERDE MÁS VIVO
+   ========================================================================= */
+:root {
+  /* Fondo sobrio extraído del logo */
+  --teleferico-brand-base: #12574c;    /* Verde pino institucional */
+  --teleferico-brand-dark: #0a3831;    /* Sombra profunda */
+  --teleferico-brand-deep: #05241f;    /* Contraste inferior */
+
+  /* Tonos más vivos y encendidos para las olas */
+  --teleferico-wave-1: rgba(22, 255, 224, 0.45);  /* Verde esmeralda claro / brillante */
+  --teleferico-wave-2: rgba(205, 251, 235, 0.35);  /* Verde menta encendido con cuerpo */
+}
+/*--teleferico-wave-1: rgba(45, 212, 191, 0.45);  /* Verde esmeralda claro / brillante */
+
+/* Fondo dinámico estilo Mi Teleférico */
+.psp-gradient {
+  background: linear-gradient(
+    125deg, 
+    var(--teleferico-brand-deep) 0%, 
+    var(--teleferico-brand-base) 50%, 
+    var(--teleferico-brand-dark) 100%
+  );
+  background-size: 300% 300%;
+  animation: pspWaveShift 18s ease-in-out infinite alternate;
+}
+
+@keyframes pspWaveShift {
+  0% { background-position: 0% 30%; }
+  50% { background-position: 100% 70%; }
+  100% { background-position: 0% 30%; }
+}
+
+/* Animación continua sin salirse del margen */
+@keyframes waveFlowOne {
+  0% {
+    transform: translate3d(0, 0, 0) scaleY(1);
+  }
+  50% {
+    transform: translate3d(-10%, -6px, 0) scaleY(1.08);
+  }
+  100% {
+    transform: translate3d(-20%, 0, 0) scaleY(1);
+  }
+}
+
+@keyframes waveFlowTwo {
+  0% {
+    transform: translate3d(-15%, 0, 0) scaleY(1.05);
+  }
+  50% {
+    transform: translate3d(-5%, -10px, 0) scaleY(0.95);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scaleY(1.05);
+  }
+}
+
+.psp-wave-1 {
+  animation: waveFlowOne 20s ease-in-out infinite alternate !important;
+  will-change: transform;
+}
+
+.psp-wave-2 {
+  animation: waveFlowTwo 26s ease-in-out infinite alternate !important;
+  will-change: transform;
+}

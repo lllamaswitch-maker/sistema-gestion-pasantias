@@ -1,0 +1,194 @@
+
+/* ============================================================
+   MI TELEFÉRICO - CONTROL ADMINISTRATIVO DE PASANTÍAS
+   ============================================================ */
+
+/* MODAL ADMINISTRATIVO */
+
+.control-modal {
+  max-width: 950px;
+}
+
+.control-subtitulo {
+  margin: 8px 0 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* FORMULARIO */
+
+.control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.control-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.control-field input,
+.control-field select {
+  width: 100%;
+  min-height: 43px;
+  box-sizing: border-box;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #334155;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.control-field input:focus,
+.control-field select:focus {
+  outline: none;
+  border-color: #12574c;
+  box-shadow: 0 0 0 3px rgba(18, 87, 76, 0.1);
+}
+
+.control-field input:disabled,
+.control-field select:disabled {
+  background: #f1f5f9;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* CHECKBOX */
+
+.control-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.control-check:hover {
+  background: #f0fdf9;
+}
+
+.control-check input {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  accent-color: #12574c;
+  cursor: pointer;
+}
+
+/* AVISO BIOMÉTRICO */
+
+.control-aviso {
+  margin-top: 14px;
+  padding: 13px 15px;
+  border: 1px solid #bfdbfe;
+  border-radius: 9px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* TEXTOS AUXILIARES */
+
+.control-help {
+  margin: 0 0 16px;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* BOTONES DE GUARDADO */
+
+.control-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.control-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ACCIONES DE ESTADO */
+
+.control-state-actions {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px 0 4px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* MODAL DE CONFIRMACIÓN */
+
+.control-confirm-overlay {
+  z-index: 1100;
+}
+
+.control-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+  .control-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .control-actions {
+    flex-direction: column;
+  }
+
+  .control-actions .pasante-btn-config {
+    width: 100%;
+  }
+
+  .control-state-actions {
+    flex-direction: column;
+  }
+
+  .control-state-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .control-modal {
+    max-width: 100%;
+  }
+
+  .control-confirm-actions {
+    flex-direction: column;
+  }
+
+  .control-confirm-actions button {
+    width: 100%;
+  }
+}

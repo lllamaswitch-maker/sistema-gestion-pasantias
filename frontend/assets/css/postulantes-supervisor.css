@@ -1,0 +1,1975 @@
+/* ============================================================
+   POSTULANTES - PANEL DEL SUPERVISOR
+   ============================================================ */
+
+
+/* ============================================================
+   INFORMACIÓN DEL ÁREA
+   ============================================================ */
+
+.postulantes-area-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+
+/* ============================================================
+   PESTAÑAS TIPO CARPETA
+   ============================================================ */
+
+.postulantes-tabs-container {
+  margin-top: 22px;
+  margin-bottom: 22px;
+
+  border-bottom: 1px solid #cddbd7;
+}
+
+
+.postulantes-tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+
+.postulantes-tab {
+  position: relative;
+
+  min-height: 58px;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 22px;
+
+  border: 1px solid #d1ddda;
+  border-bottom: none;
+
+  border-radius: 12px 12px 0 0;
+
+  background: #eaf0ee;
+
+  color: #62726f;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+
+.postulantes-tab svg {
+  width: 20px;
+  height: 20px;
+
+  flex-shrink: 0;
+}
+
+
+.postulantes-tab strong {
+  min-width: 26px;
+  height: 26px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 8px;
+
+  border-radius: 999px;
+
+  background: #d9e4e1;
+
+  color: #526560;
+
+  font-size: 12px;
+  font-weight: 900;
+}
+
+
+.postulantes-tab:hover {
+  background: #f3f7f5;
+  color: #285e53;
+}
+
+
+.postulantes-tab.active {
+  margin-bottom: -1px;
+
+  border-color: #b8d4cc;
+
+  background: #ffffff;
+
+  color: #12574c;
+
+  box-shadow:
+    inset 0 3px 0 #12574c;
+}
+
+
+.postulantes-tab.active strong {
+  background: #e4f4ef;
+  color: #12574c;
+}
+
+
+/* ============================================================
+   KPIS
+   ============================================================ */
+
+.postulantes-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 22px;
+}
+
+
+/* ============================================================
+   PANEL GENERAL
+   ============================================================ */
+
+.postulantes-panel {
+  margin-bottom: 22px;
+
+  padding: 24px;
+
+  border: 1px solid #dfe8e5;
+  border-radius: 15px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 25px
+    rgba(15, 23, 42, 0.035);
+}
+
+
+.postulantes-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+
+
+.postulantes-panel-header h2 {
+  margin: 4px 0 0;
+
+  color: #263548;
+
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 900;
+}
+
+
+.postulantes-header-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+.postulantes-resultados {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 32px;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  background: #eef4f2;
+
+  color: #52746c;
+
+  font-size: 12px;
+  font-weight: 900;
+}
+
+
+.postulantes-clear-button {
+  min-height: 36px;
+
+  padding: 7px 12px;
+
+  border: 1px solid #d4dfdc;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #52645f;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.postulantes-clear-button:hover {
+  border-color: #8ab8ac;
+  color: #12574c;
+}
+
+
+/* ============================================================
+   FILTROS
+   ============================================================ */
+
+.postulantes-filtros {
+  display: grid;
+
+  gap: 16px;
+}
+
+
+.postulantes-filtros-academicos {
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+}
+
+
+.postulantes-form-group {
+  min-width: 0;
+}
+
+
+.postulantes-form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #5d6d82;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+
+.postulantes-form-group input,
+.postulantes-form-group select {
+  width: 100%;
+  height: 48px;
+
+  box-sizing: border-box;
+
+  padding: 0 14px;
+
+  border: 1px solid #d6e1de;
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #f9fbfb;
+
+  color: #36485d;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+
+.postulantes-form-group input:focus,
+.postulantes-form-group select:focus {
+  border-color: #76b8a8;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(18, 87, 76, 0.08);
+}
+
+
+/* ============================================================
+   ESTADOS VACÍOS / CARGANDO
+   ============================================================ */
+
+.postulantes-state-card {
+  padding: 52px 28px;
+
+  border: 1px solid #dfe8e5;
+  border-radius: 15px;
+
+  background: #ffffff;
+
+  text-align: center;
+
+  box-shadow:
+    0 8px 25px
+    rgba(15, 23, 42, 0.035);
+}
+
+
+.postulantes-state-card strong {
+  display: block;
+
+  margin-top: 16px;
+
+  color: #334155;
+
+  font-size: 17px;
+  font-weight: 900;
+}
+
+
+.postulantes-state-card p {
+  max-width: 560px;
+
+  margin: 8px auto 0;
+
+  color: #8593a6;
+
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+
+.postulantes-empty-icon {
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: #eef6f3;
+
+  color: #347b6a;
+}
+
+
+.postulantes-empty-icon svg {
+  width: 27px;
+  height: 27px;
+}
+
+
+.postulantes-empty-clear {
+  margin-top: 18px;
+
+  min-height: 42px;
+
+  padding: 9px 16px;
+
+  border: 1px solid #12574c;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #12574c;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.postulantes-spinner {
+  width: 38px;
+  height: 38px;
+
+  margin: 0 auto;
+
+  border: 4px solid #e2e8f0;
+  border-top-color: #12574c;
+
+  border-radius: 50%;
+
+  animation:
+    postulantes-spin 0.8s linear infinite;
+}
+
+
+@keyframes postulantes-spin {
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* ============================================================
+   ERROR
+   ============================================================ */
+
+.postulantes-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 18px 20px;
+
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+
+  background: #fff7f7;
+
+  margin-bottom: 22px;
+}
+
+
+.postulantes-error strong {
+  display: block;
+
+  color: #b91c1c;
+
+  font-size: 14px;
+  font-weight: 900;
+}
+
+
+.postulantes-error p {
+  margin-top: 4px;
+
+  color: #c74646;
+
+  font-size: 13px;
+}
+
+
+.postulantes-error button {
+  flex-shrink: 0;
+
+  min-height: 40px;
+
+  padding: 9px 14px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #b91c1c;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+
+/* ============================================================
+   TABLA
+   ============================================================ */
+
+.postulantes-table-card {
+  overflow: hidden;
+
+  border: 1px solid #dfe8e5;
+  border-radius: 15px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 25px
+    rgba(15, 23, 42, 0.035);
+}
+
+
+.postulantes-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 22px 24px;
+
+  border-bottom: 1px solid #edf1f0;
+}
+
+
+.postulantes-table-header h2 {
+  margin: 4px 0 0;
+
+  color: #263548;
+
+  font-size: 20px;
+  font-weight: 900;
+}
+
+
+.postulantes-table-scroll {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+
+.postulantes-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+
+.postulantes-table thead {
+  background: #f7faf9;
+}
+
+
+.postulantes-table th {
+  padding: 15px 17px;
+
+  color: #6f807c;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: 0.055em;
+
+  text-align: left;
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+.postulantes-table td {
+  padding: 17px;
+
+  border-top: 1px solid #eff3f2;
+
+  color: #415169;
+
+  font-size: 14px;
+
+  vertical-align: middle;
+}
+
+
+.postulantes-table tbody tr {
+  transition:
+    background 0.16s ease;
+}
+
+
+.postulantes-table tbody tr:hover {
+  background: #fbfdfc;
+}
+
+
+/* ============================================================
+   POSTULANTE
+   ============================================================ */
+
+.postulante-persona {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 200px;
+}
+
+
+.postulante-avatar {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: 1px solid #d6ebe4;
+  border-radius: 11px;
+
+  background: #eef8f4;
+
+  color: #126454;
+
+  font-size: 13px;
+  font-weight: 900;
+}
+
+
+.postulante-nombre {
+  display: block;
+
+  color: #2f4055;
+
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 900;
+}
+
+
+.postulante-aprobado-texto {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #67837c;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+.postulante-institucion {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #8492a6;
+
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+
+.postulante-repostulacion {
+  display: inline-block;
+
+  margin-top: 6px;
+
+  padding: 4px 8px;
+
+  border: 1px solid #f4d49c;
+  border-radius: 999px;
+
+  background: #fff8e8;
+
+  color: #9a6720;
+
+  font-size: 11px;
+  font-weight: 900;
+}
+
+
+.postulante-carrera {
+  display: block;
+
+  color: #3d4f64;
+
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 900;
+}
+
+
+.postulante-dato,
+.postulante-turno {
+  color: #53647a;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+.postulante-modalidad {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 9px;
+
+  border: 1px solid #bde5d6;
+  border-radius: 7px;
+
+  background: #effbf6;
+
+  color: #176b54;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+.postulante-sin-dato {
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+
+/* ============================================================
+   ACCIONES
+   ============================================================ */
+
+.postulantes-action-column {
+  text-align: right !important;
+}
+
+
+.postulante-view-button {
+  min-height: 40px;
+
+  padding: 9px 15px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #12574c;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+
+.postulante-view-button:hover {
+  background: #0d463d;
+
+  transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   HISTORIAL
+   ============================================================ */
+
+.historial-resumen-estados {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+}
+
+
+.historial-resumen-estados span {
+  padding: 7px 10px;
+
+  border-radius: 999px;
+
+  background: #f1f5f4;
+
+  color: #65756f;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+.historial-resumen-estados strong {
+  color: #263e38;
+}
+
+
+.postulantes-historial-table {
+  min-width: 1050px;
+}
+
+
+.historial-fecha {
+  display: block;
+
+  min-width: 110px;
+
+  color: #53647a;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  line-height: 1.45;
+}
+
+
+.historial-actividades {
+  max-width: 350px;
+
+  color: #47596d;
+
+  font-size: 13px;
+  line-height: 1.55;
+
+  white-space: normal;
+}
+
+
+.historial-estado {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  white-space: nowrap;
+}
+
+
+.historial-estado.pendiente {
+  border: 1px solid #f1d492;
+
+  background: #fff8e7;
+
+  color: #8a5d00;
+}
+
+
+.historial-estado.aprobada {
+  border: 1px solid #aee0cb;
+
+  background: #ecfaf4;
+
+  color: #126948;
+}
+
+
+.historial-estado.rechazada {
+  border: 1px solid #f1b9b9;
+
+  background: #fff1f1;
+
+  color: #a72828;
+}
+
+
+.historial-estado.cancelada {
+  border: 1px solid #cfd8e2;
+
+  background: #f3f5f7;
+
+  color: #5d6978;
+}
+
+
+.historial-observacion {
+  display: block;
+
+  max-width: 260px;
+
+  margin-top: 8px;
+
+  color: #7c8a9c;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+.historial-cancelar-button {
+  min-height: 40px;
+
+  padding: 9px 13px;
+
+  border: 1px solid #e2a7a7;
+  border-radius: 8px;
+
+  background: #fffafa;
+
+  color: #b12c2c;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+
+.historial-cancelar-button:hover {
+  border-color: #cf6868;
+
+  background: #fff1f1;
+}
+
+
+.historial-sin-accion {
+  color: #9aa6b4;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   MODAL GENERAL
+   ============================================================ */
+
+.postulantes-modal-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    rgba(15, 23, 42, 0.52);
+
+  backdrop-filter:
+    blur(4px);
+}
+
+
+.postulantes-modal {
+  width: 100%;
+
+  max-width: 650px;
+
+  overflow: hidden;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 24px 70px
+    rgba(15, 23, 42, 0.22);
+}
+
+
+.postulantes-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 20px 24px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #12574c,
+      #0d493f
+    );
+
+  color: #ffffff;
+}
+
+
+.postulantes-modal-header p {
+  margin: 0;
+
+  color: #b5e8d7;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+
+.postulantes-modal-header h3 {
+  margin: 4px 0 0;
+
+  font-size: 19px;
+  font-weight: 900;
+}
+
+
+.postulantes-modal-header button {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  color: #ffffff;
+
+  font-size: 22px;
+
+  cursor: pointer;
+}
+
+
+.postulantes-modal-header button:hover {
+  background:
+    rgba(255, 255, 255, 0.18);
+}
+
+
+.postulantes-modal-header button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+
+.postulantes-modal-body {
+  padding: 24px;
+}
+
+
+/* ============================================================
+   MODAL DE REVISIÓN
+   ============================================================ */
+
+.postulantes-modal-revision {
+  width: min(
+    920px,
+    calc(100vw - 40px)
+  );
+
+  max-width: 920px;
+  max-height: 92vh;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+.postulantes-modal-revision
+.postulantes-modal-body {
+  padding: 26px;
+
+  overflow-y: auto;
+
+  flex: 1;
+}
+
+
+/* ============================================================
+   SECCIONES MODAL
+   ============================================================ */
+
+.postulantes-modal-section {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 24px;
+
+  margin-bottom: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #dce5e2;
+  border-radius: 14px;
+}
+
+
+.postulantes-modal-section:last-child {
+  margin-bottom: 0;
+}
+
+
+.postulantes-modal-section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+
+
+.postulantes-modal-section-header h4 {
+  margin: 5px 0 0;
+
+  font-size: 20px;
+  line-height: 1.35;
+  font-weight: 800;
+
+  color: #26384d;
+}
+
+
+.postulantes-modal-label {
+  margin: 0;
+
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+
+  color: #61748b;
+}
+
+
+.postulantes-modal-empty {
+  padding: 18px;
+
+  border-radius: 9px;
+
+  background: #f7f9f8;
+
+  color: #80908b;
+
+  font-size: 14px;
+
+  text-align: center;
+}
+
+
+/* ============================================================
+   INFORMACIÓN ACADÉMICA
+   ============================================================ */
+
+.postulantes-formaciones {
+  display: grid;
+
+  gap: 14px;
+}
+
+
+.postulantes-formacion-item {
+  padding: 0;
+}
+
+
+.postulantes-academic-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+
+.postulantes-academic-field {
+  min-width: 0;
+
+  padding: 16px 18px;
+
+  background: #f7faf9;
+
+  border: 1px solid #e0e8e5;
+  border-radius: 10px;
+}
+
+
+.postulantes-academic-field span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  color: #73839a;
+}
+
+
+.postulantes-academic-field strong {
+  display: block;
+
+  font-size: 15px;
+  line-height: 1.45;
+
+  color: #27374d;
+}
+
+
+/* ============================================================
+   DOCUMENTOS
+   ============================================================ */
+
+.postulantes-documentos-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+
+.postulantes-documento-card {
+  display: grid;
+
+  grid-template-columns:
+    52px
+    minmax(0, 1fr);
+
+  gap: 14px;
+
+  align-items: center;
+
+  padding: 18px;
+
+  border: 1px solid #dbe5e2;
+  border-radius: 12px;
+
+  background: #f9fbfa;
+}
+
+
+.postulantes-documento-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #e9f5f1;
+
+  color: #126454;
+
+  font-size: 13px;
+  font-weight: 900;
+}
+
+
+.postulantes-documento-info {
+  min-width: 0;
+}
+
+
+.postulantes-documento-info strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 16px;
+  line-height: 1.4;
+
+  color: #27374d;
+}
+
+
+.postulantes-documento-info span {
+  display: block;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  color: #607086;
+}
+
+
+.postulantes-documento-no-disponible {
+  color: #9a4e4e !important;
+}
+
+
+.postulantes-documento-button {
+  grid-column: 1 / -1;
+
+  width: 100%;
+  min-height: 44px;
+
+  padding: 10px 16px;
+
+  border: 1px solid #176858;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #155f51;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.postulantes-documento-button:hover:not(:disabled) {
+  background: #155f51;
+
+  color: #ffffff;
+}
+
+
+.postulantes-documento-button:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}
+
+
+/* ============================================================
+   PLAN DE ACTIVIDADES
+   ============================================================ */
+
+.postulantes-required-badge {
+  flex-shrink: 0;
+
+  padding: 6px 10px;
+
+  border: 1px solid #f2d08b;
+  border-radius: 999px;
+
+  background: #fff5df;
+
+  color: #8c5b00;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: 0.04em;
+}
+
+
+.postulantes-plan-info {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  margin-bottom: 18px;
+
+  padding: 14px 16px;
+
+  border-left: 4px solid #176858;
+  border-radius: 8px;
+
+  background: #f2f8f6;
+
+  color: #43566d;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+
+.postulantes-plan-field {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  box-sizing: border-box;
+}
+
+
+.postulantes-plan-field label {
+  display: block;
+
+  width: 100%;
+
+  margin-bottom: 10px;
+
+  color: #293b51;
+
+  font-size: 15px;
+  line-height: 1.45;
+  font-weight: 800;
+}
+
+
+.postulantes-plan-field label strong {
+  color: #b42318;
+}
+
+
+.postulantes-plan-field textarea {
+  display: block;
+
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+
+  min-height: 190px;
+  height: 190px;
+
+  box-sizing: border-box;
+
+  padding: 16px 18px;
+
+  border: 1px solid #bac9c5;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #26384d;
+
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.65;
+
+  resize: vertical;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.postulantes-plan-field textarea::placeholder {
+  color: #98a5b5;
+
+  opacity: 1;
+}
+
+
+.postulantes-plan-field textarea:focus {
+  border-color: #176858;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(23, 104, 88, 0.12);
+}
+
+
+.postulantes-plan-field textarea:disabled {
+  background: #f1f4f3;
+
+  cursor: not-allowed;
+}
+
+
+.postulantes-plan-footer {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 20px;
+
+  margin-top: 8px;
+
+  color: #728197;
+
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+
+.postulantes-plan-warning {
+  color: #a15c00;
+
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   MENSAJE DE ERROR DEL MODAL
+   ============================================================ */
+
+.postulantes-solicitud-error {
+  margin-top: 14px;
+
+  padding: 13px 15px;
+
+  border: 1px solid #efb6b6;
+  border-radius: 8px;
+
+  background: #fff4f4;
+
+  color: #9f2424;
+
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   FOOTER MODAL
+   ============================================================ */
+
+.postulantes-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 18px 26px;
+
+  background: #f8faf9;
+
+  border-top: 1px solid #dce5e2;
+}
+
+
+.postulantes-modal-cancel-button,
+.postulantes-solicitar-button,
+.historial-confirmar-cancelacion {
+  min-height: 46px;
+
+  padding: 11px 22px;
+
+  border-radius: 9px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.postulantes-modal-cancel-button {
+  border: 1px solid #cbd5d1;
+
+  background: #ffffff;
+
+  color: #46566a;
+}
+
+
+.postulantes-solicitar-button {
+  border: 1px solid #155f51;
+
+  background: #155f51;
+
+  color: #ffffff;
+}
+
+
+.postulantes-solicitar-button:hover:not(:disabled) {
+  background: #0d4d42;
+}
+
+
+.postulantes-solicitar-button:disabled {
+  border-color: #b9c8c4;
+
+  background: #d7dfdd;
+
+  color: #788783;
+
+  cursor: not-allowed;
+}
+
+
+/* ============================================================
+   MODAL DE CANCELACIÓN
+   ============================================================ */
+
+.postulantes-modal-cancelacion {
+  max-width: 650px;
+}
+
+
+.postulantes-modal-header-cancelacion {
+  background:
+    linear-gradient(
+      135deg,
+      #7d2525,
+      #5e1c1c
+    );
+}
+
+
+.postulantes-modal-header-cancelacion p {
+  color: #ffd1d1;
+}
+
+
+.cancelacion-postulante-card {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  margin-bottom: 18px;
+
+  padding: 17px 18px;
+
+  border: 1px solid #dce5e2;
+  border-radius: 11px;
+
+  background: #f8faf9;
+}
+
+
+.cancelacion-postulante-card span {
+  color: #728197;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+.cancelacion-postulante-card strong {
+  color: #29394e;
+
+  font-size: 17px;
+  font-weight: 900;
+}
+
+
+.cancelacion-postulante-card small {
+  color: #6c7c91;
+
+  font-size: 13px;
+}
+
+
+.cancelacion-advertencia {
+  margin-bottom: 20px;
+
+  padding: 15px 17px;
+
+  border-left: 4px solid #c85656;
+  border-radius: 8px;
+
+  background: #fff4f4;
+}
+
+
+.cancelacion-advertencia strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #9e2929;
+
+  font-size: 14px;
+  font-weight: 900;
+}
+
+
+.cancelacion-advertencia p {
+  margin: 0;
+
+  color: #704747;
+
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+
+.cancelacion-form-group {
+  margin-top: 18px;
+}
+
+
+.cancelacion-form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #34455a;
+
+  font-size: 14px;
+  font-weight: 900;
+}
+
+
+.cancelacion-form-group label strong {
+  color: #b42318;
+}
+
+
+.cancelacion-form-group textarea,
+.cancelacion-form-group input {
+  display: block;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid #bdcac7;
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #2f4055;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.cancelacion-form-group textarea {
+  min-height: 120px;
+
+  padding: 13px 14px;
+
+  line-height: 1.55;
+
+  resize: vertical;
+}
+
+
+.cancelacion-form-group input {
+  height: 48px;
+
+  padding: 0 14px;
+}
+
+
+.cancelacion-form-group textarea:focus,
+.cancelacion-form-group input:focus {
+  border-color: #b36161;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(179, 97, 97, 0.1);
+}
+
+
+.cancelacion-form-group small {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #8492a6;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
+.cancelacion-contador {
+  margin-top: 6px;
+
+  color: #8c99a8;
+
+  font-size: 12px;
+
+  text-align: right;
+}
+
+
+.historial-confirmar-cancelacion {
+  border: 1px solid #a72d2d;
+
+  background: #a72d2d;
+
+  color: #ffffff;
+}
+
+
+.historial-confirmar-cancelacion:hover:not(:disabled) {
+  background: #8c2323;
+}
+
+
+.historial-confirmar-cancelacion:disabled {
+  border-color: #d5c5c5;
+
+  background: #e6dddd;
+
+  color: #9c8d8d;
+
+  cursor: not-allowed;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1150px) {
+
+  .postulantes-filtros-academicos {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+@media (max-width: 1000px) {
+
+  .postulantes-area-grid,
+  .postulantes-kpi-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .postulantes-tabs {
+    overflow-x: auto;
+  }
+
+
+  .postulantes-tab {
+    flex-shrink: 0;
+  }
+
+}
+
+
+@media (max-width: 800px) {
+
+  .postulantes-academic-grid,
+  .postulantes-documentos-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .postulantes-modal-revision {
+    width:
+      calc(100vw - 20px);
+
+    max-height: 95vh;
+  }
+
+
+  .postulantes-modal-revision
+  .postulantes-modal-body {
+    padding: 18px;
+  }
+
+
+  .postulantes-modal-section {
+    padding: 18px;
+  }
+
+
+  .postulantes-table-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .historial-resumen-estados {
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 750px) {
+
+  .postulantes-filtros-academicos,
+  .postulantes-area-grid,
+  .postulantes-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .postulantes-panel-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .postulantes-header-actions {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+
+
+  .postulantes-tabs-container {
+    overflow-x: auto;
+  }
+
+
+  .postulantes-tabs {
+    min-width: max-content;
+  }
+
+
+  .postulantes-modal-footer {
+    flex-direction: column-reverse;
+  }
+
+
+  .postulantes-modal-cancel-button,
+  .postulantes-solicitar-button,
+  .historial-confirmar-cancelacion {
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 520px) {
+
+  .postulantes-modal-backdrop {
+    padding: 10px;
+  }
+
+
+  .postulantes-modal-header {
+    padding: 17px;
+  }
+
+
+  .postulantes-modal-body {
+    padding: 17px;
+  }
+
+
+  .postulantes-panel {
+    padding: 18px;
+  }
+
+
+  .postulantes-tab {
+    min-height: 52px;
+
+    padding: 0 15px;
+
+    font-size: 13px;
+  }
+
+
+  .postulantes-plan-footer {
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+}

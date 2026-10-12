@@ -1,0 +1,673 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model auditoria_logs {
+  id                String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  usuario_id        String?   @db.Uuid
+  administrativo_id String?   @db.Uuid
+  accion            String    @db.VarChar(100)
+  tabla_afectada    String    @db.VarChar(50)
+  registro_id       String?   @db.Uuid
+  detalles          Json?
+  ip_origen         String?   @db.VarChar(45)
+  created_at        DateTime? @default(now()) @db.Timestamptz(6)
+
+  usuarios_sistema         usuarios_sistema?         @relation(fields: [usuario_id], references: [id], onUpdate: NoAction)
+  usuarios_administrativos usuarios_administrativos? @relation(fields: [administrativo_id], references: [id], onUpdate: NoAction)
+
+  @@index([usuario_id])
+  @@index([administrativo_id])
+  @@index([created_at])
+}
+
+model control_administrativo {
+  id                        String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pasante_id                String              @unique @db.Uuid
+  talla_chamarra            talla_chamarra_enum @default(NO_ENTREGADO)
+  credencial_codigo         String?             @db.VarChar(100)
+  induccion                 Boolean             @default(false)
+  compromiso                Boolean             @default(false)
+  carta_t3                  String?             @default("NO CORRESPONDE") @db.VarChar(50)
+  seguro_contra_accidente   String?             @default("NO CORRESPONDE") @db.VarChar(50)
+  abandono                  Boolean             @default(false)
+  fecha_devolucion_tarjeta  DateTime?           @db.Date
+  fecha_devolucion_chamarra DateTime?           @db.Date
+  reposicion_tarjeta        String?             @db.VarChar(100)
+  certificado_emitido       Boolean             @default(false)
+  pasantes_activos          pasantes_activos    @relation(fields: [pasante_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model datos_contacto_postulante {
+  id                String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  postulante_id     String  @unique @db.Uuid
+  numero_celular    String  @db.VarChar(20)
+  telefono_fijo     String? @db.VarChar(20)
+  ciudad            String  @default("La Paz") @db.VarChar(100)
+  zona_domicilio    String  @db.VarChar(150)
+  direccion_detalle String? @db.VarChar(255)
+
+  postulantes postulantes @relation(fields: [postulante_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model detalles_solicitud_area {
+  id                             String                         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  solicitud_id                   String                         @db.Uuid
+  postulante_id                  String                         @db.Uuid
+  seleccionado_en                DateTime?                      @default(now()) @db.Timestamptz(6)
+  postulantes                    postulantes                    @relation(fields: [postulante_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  solicitudes_requerimiento_area solicitudes_requerimiento_area @relation(fields: [solicitud_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([solicitud_id, postulante_id], map: "uq_solicitud_postulante")
+}
+
+model dim_institucion_carrera {
+  id                 String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  institucion_nombre String           @db.VarChar(150)
+  tipo_institucion   String           @db.VarChar(50)
+  carrera            String           @db.VarChar(150)
+  fact_pasantias     fact_pasantias[]
+
+  @@unique([institucion_nombre, carrera], map: "uq_dim_institucion_carrera")
+}
+
+model dim_postulante {
+  id               String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  ci               String           @unique @db.VarChar(20)
+  genero           String           @db.VarChar(20)
+  rango_edad       String           @db.VarChar(30)
+  turno_disponible String           @db.VarChar(30)
+  fact_pasantias   fact_pasantias[]
+}
+
+model dim_tiempo {
+  id             String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  fecha          DateTime         @unique @db.Date
+  anio           Int
+  mes            Int
+  nombre_mes     String           @db.VarChar(20)
+  semestre       Int
+  trimestre      Int
+  dia_semana     String           @db.VarChar(20)
+  fact_pasantias fact_pasantias[]
+}
+
+model dim_unidad_organizacional {
+  id             String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  gerencia       String           @db.VarChar(150)
+  departamento   String           @db.VarChar(150)
+  fact_pasantias fact_pasantias[]
+
+  @@unique([gerencia, departamento], map: "uq_dim_unidad")
+}
+
+model disponibilidad_horaria_postulante {
+  id                    String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  postulante_id         String                    @unique @db.Uuid
+  turno                 turno_disponibilidad_enum
+  observaciones_horario String?
+  postulantes           postulantes               @relation(fields: [postulante_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([turno], map: "idx_disponibilidad_turno")
+}
+
+model documentos_postulante {
+  id             String                          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  postulante_id  String                          @db.Uuid
+  postulacion_id String                          @db.Uuid
+  tipo_documento tipo_documento_postulacion_enum
+  archivo_url    String                          @db.VarChar(255)
+  verificado     Boolean                         @default(false)
+  observacion    String?
+  uploaded_at    DateTime?                       @default(now()) @db.Timestamptz(6)
+
+  postulantes  postulantes   @relation(fields: [postulante_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  postulaciones postulaciones @relation(fields: [postulacion_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_documentos_postulacion")
+
+  @@unique([postulacion_id, tipo_documento], map: "uq_documento_por_postulacion")
+}
+
+model estados_postulacion {
+  id                  String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  postulante_id       String                  @db.Uuid
+  postulacion_id      String                  @unique(map: "uq_estado_por_postulacion") @db.Uuid
+  estado_actual       estado_postulacion_enum @default(REGISTRADO)
+  fecha_ultimo_cambio DateTime?               @default(now()) @db.Timestamptz(6)
+  observaciones_rrhh  String?
+
+  postulantes  postulantes   @relation(fields: [postulante_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  postulaciones postulaciones @relation(fields: [postulacion_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_estados_postulacion_postulacion")
+
+  @@index([estado_actual], map: "idx_estados_actual")
+}
+model experiencias_laborales {
+  id                  String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  postulante_id       String      @db.Uuid
+  institucion_empresa String      @db.VarChar(150)
+  fecha_inicio        DateTime?   @db.Date
+  fecha_final         DateTime?   @db.Date
+  tiempo_duracion     String?     @db.VarChar(50)
+  postulantes         postulantes @relation(fields: [postulante_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model fact_pasantias {
+  id                        String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  postulante_key            String                    @db.Uuid
+  carrera_key               String                    @db.Uuid
+  unidad_key                String                    @db.Uuid
+  tiempo_inicio_key         String                    @db.Uuid
+  horas_requeridas          Int?
+  horas_acumuladas          Int                       @default(0)
+  horas_restantes           Int?
+  porcentaje_avance         Decimal?                  @default(0.00) @db.Decimal(5, 2)
+  duracion_meses            Int?
+  abandono                  Boolean                   @default(false)
+  tarjeta_devuelta          Boolean                   @default(false)
+  certificado_otorgado      Boolean                   @default(false)
+  created_at                DateTime?                 @default(now()) @db.Timestamptz(6)
+  dim_institucion_carrera   dim_institucion_carrera   @relation(fields: [carrera_key], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  dim_postulante            dim_postulante            @relation(fields: [postulante_key], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  dim_tiempo                dim_tiempo                @relation(fields: [tiempo_inicio_key], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  dim_unidad_organizacional dim_unidad_organizacional @relation(fields: [unidad_key], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([carrera_key], map: "idx_fact_pasantias_carrera")
+  @@index([unidad_key], map: "idx_fact_pasantias_unidad")
+}
+
+model formacion_academica_postulante {
+  id                    String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  postulante_id         String                  @db.Uuid
+  institucion_tipo      institucion_tipo_enum   @default(UNIVERSIDAD)
+  institucion_nombre    String                  @db.VarChar(150)
+  carrera               String                  @db.VarChar(150)
+  semestre_o_nivel      String                  @db.VarChar(50)
+  modalidad_postulacion modalidad_pasantia_enum @default(PASANTIA)
+  carrera_id            String?                 @db.Uuid
+  institucion_id        String?                 @db.Uuid
+
+  carreras               carreras?               @relation(fields: [carrera_id], references: [id], onUpdate: NoAction)
+  instituciones_convenio instituciones_convenio? @relation(fields: [institucion_id], references: [id], onUpdate: NoAction)
+  postulantes            postulantes             @relation(fields: [postulante_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([carrera], map: "idx_formacion_carrera")
+  @@index([institucion_nombre], map: "idx_formacion_institucion")
+  @@index([carrera_id], map: "idx_formacion_carrera_id")
+  @@index([institucion_id], map: "idx_formacion_institucion_id")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model idiomas_postulante {
+  id            String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  postulante_id String      @db.Uuid
+  idioma        String      @db.VarChar(100)
+  porcentaje    Int
+  postulantes   postulantes @relation(fields: [postulante_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+
+model pasantes_activos {
+  id                       String                     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  postulante_id            String                     @unique @db.Uuid
+  unidad_organizacional_id String?                    @db.Uuid
+  departamento_id          String?                    @db.Uuid
+  supervisor_id            String?                    @db.Uuid
+  solicitud_pasante_id     String?                    @unique @db.Uuid
+
+  supervisor               String                     @db.VarChar(150)
+  modalidad_pasantia       String                     @db.VarChar(100)
+  estado                   estado_pasante_activo_enum @default(ACTIVO)
+
+  created_at               DateTime?                  @default(now()) @db.Timestamptz(6)
+  updated_at               DateTime?                  @default(now()) @db.Timestamptz(6)
+
+  control_administrativo      control_administrativo?
+  seguimiento_academico_horas seguimiento_academico_horas?
+  tramites_pasante            tramites_pasante[]
+  reportes_comportamiento reportes_comportamiento_pasante[]
+
+  postulantes               postulantes                      @relation(fields: [postulante_id], references: [id], onUpdate: NoAction)
+  unidades_organizacionales unidades_organizacionales?       @relation(fields: [unidad_organizacional_id], references: [id], onUpdate: NoAction)
+  departamentos             departamentos?                   @relation(fields: [departamento_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  supervisor_usuario        usuarios_administrativos?        @relation(fields: [supervisor_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  solicitud_pasante         solicitudes_pasante_supervisor?  @relation(fields: [solicitud_pasante_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([estado], map: "idx_pasantes_estado")
+  @@index([departamento_id], map: "idx_pasantes_activos_departamento")
+  @@index([supervisor_id], map: "idx_pasantes_activos_supervisor_id")
+}
+
+model perfiles_personal {
+  id                       String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  usuario_id               String                    @unique @db.Uuid
+  unidad_organizacional_id String?                   @db.Uuid
+  departamento_id          String?                   @db.Uuid
+  nombres                  String                    @db.VarChar(100)
+  apellidos                String                    @db.VarChar(100)
+  cargo                    String                    @db.VarChar(100)
+  telefono_interno         String?                   @db.VarChar(20)
+  created_at               DateTime?                 @default(now()) @db.Timestamptz(6)
+
+  unidades_organizacionales unidades_organizacionales? @relation(fields: [unidad_organizacional_id], references: [id], onUpdate: NoAction)
+  departamentos              departamentos?             @relation(fields: [departamento_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  usuarios_sistema           usuarios_sistema           @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([departamento_id], map: "idx_perfiles_personal_departamento")
+}
+
+model postulantes {
+  id               String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  usuario_id       String?           @unique @db.Uuid
+  ci               String            @unique @db.VarChar(20)
+  expedido         String            @db.VarChar(20)
+  nombres          String            @db.VarChar(100)
+  apellido_paterno String            @db.VarChar(100)
+  apellido_materno String?           @db.VarChar(100)
+  fecha_nacimiento DateTime?         @db.Date
+  genero           genero_enum?
+  estado_civil     estado_civil_enum @default(SOLTERO)
+  tiene_hijos      Boolean           @default(false)
+  created_at       DateTime?         @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime?         @default(now()) @db.Timestamptz(6)
+
+  datos_contacto_postulante         datos_contacto_postulante?
+  detalles_solicitud_area           detalles_solicitud_area[]
+  disponibilidad_horaria_postulante disponibilidad_horaria_postulante?
+  documentos_postulante             documentos_postulante[]
+  estados_postulacion               estados_postulacion[]
+  experiencias_laborales            experiencias_laborales[]
+  postulaciones                     postulaciones[]
+  formacion_academica_postulante    formacion_academica_postulante[]
+  idiomas_postulante                idiomas_postulante[]
+  pasantes_activos                  pasantes_activos?
+  usuarios_sistema                  usuarios_sistema?                  @relation(fields: [usuario_id], references: [id], onUpdate: NoAction)
+
+  @@index([ci], map: "idx_postulantes_ci")
+}
+
+model seguimiento_academico_horas {
+  id                String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pasante_id        String                    @unique @db.Uuid
+  fecha_inicio      DateTime                  @db.Date
+  fecha_conclusion  DateTime                  @db.Date
+  duracion_acordada String                    @db.VarChar(50)
+  horas_requeridas  Int?
+  horas_realizadas  Int                       @default(0)
+  horas_faltantes   Int?
+  turno             turno_disponibilidad_enum
+  pasantes_activos  pasantes_activos          @relation(fields: [pasante_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+
+model solicitudes_requerimiento_area {
+  id                       String                     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  jefe_usuario_id          String                     @db.Uuid
+  unidad_organizacional_id String?                    @db.Uuid
+  departamento_id          String?                    @db.Uuid
+  carrera_solicitada       String                     @db.VarChar(150)
+  cantidad_requerida       Int
+  estado                   estado_solicitud_area_enum @default(PENDIENTE)
+  observaciones            String?
+  created_at               DateTime?                  @default(now()) @db.Timestamptz(6)
+  carrera_id               String?                    @db.Uuid
+
+  detalles_solicitud_area   detalles_solicitud_area[]
+  carreras                  carreras?                  @relation(fields: [carrera_id], references: [id], onUpdate: NoAction)
+  usuarios_sistema          usuarios_sistema           @relation(fields: [jefe_usuario_id], references: [id], onUpdate: NoAction)
+  unidades_organizacionales unidades_organizacionales? @relation(fields: [unidad_organizacional_id], references: [id], onUpdate: NoAction)
+  departamentos             departamentos?             @relation(fields: [departamento_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([departamento_id], map: "idx_solicitudes_departamento")
+}
+
+model tramites_pasante {
+  id               String                    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pasante_id       String                    @db.Uuid
+  tipo_tramite     tipo_tramite_pasante_enum
+  motivo           String
+  estado           estado_tramite_enum       @default(PENDIENTE)
+  respuesta_rrhh   String?
+  fecha_solicitud  DateTime?                 @default(now()) @db.Timestamptz(6)
+  fecha_resolucion DateTime?                 @db.Timestamptz(6)
+  pasantes_activos pasantes_activos          @relation(fields: [pasante_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model unidades_organizacionales {
+  id                             String                           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  gerencia                       String                           @db.VarChar(150)
+  departamento                   String                           @db.VarChar(150)
+  activo                         Boolean                          @default(true)
+  created_at                     DateTime?                        @default(now()) @db.Timestamptz(6)
+  pasantes_activos               pasantes_activos[]
+  perfiles_personal              perfiles_personal[]
+  solicitudes_requerimiento_area solicitudes_requerimiento_area[]
+}
+
+model usuarios_sistema {
+  id            String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email         String           @unique @db.VarChar(150)
+  password_hash String           @db.VarChar(255)
+  rol           rol_usuario_enum @default(PASANTE)
+  activo        Boolean          @default(true)
+
+  codigo_verificacion String?   @db.VarChar(255)
+  codigo_expira_en    DateTime? @db.Timestamptz(6)
+  codigo_intentos     Int       @default(0)
+  codigo_ultimo_envio DateTime? @db.Timestamptz(6)
+
+  cuenta_verificada Boolean @default(false)
+
+  ultimo_login DateTime? @db.Timestamptz(6)
+  created_at   DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime? @default(now()) @db.Timestamptz(6)
+
+  auditoria_logs                 auditoria_logs[]
+  perfiles_personal              perfiles_personal?
+  postulantes                    postulantes[]
+  solicitudes_requerimiento_area solicitudes_requerimiento_area[]
+}
+
+model carreras {
+  id                             String                           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nombre                         String                           @unique @db.VarChar(150)
+  activa                         Boolean                          @default(true)
+  created_at                     DateTime?                        @default(now()) @db.Timestamptz(6)
+  formacion_academica_postulante formacion_academica_postulante[]
+  solicitudes_requerimiento_area solicitudes_requerimiento_area[]
+}
+
+model instituciones_convenio {
+  id                             String                           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nombre                         String                           @unique @db.VarChar(200)
+  sigla                          String?                          @db.VarChar(50)
+  tipo                           institucion_tipo_enum            @default(UNIVERSIDAD)
+  convenio_activo                Boolean                          @default(true)
+  created_at                     DateTime?                        @default(now()) @db.Timestamptz(6)
+  formacion_academica_postulante formacion_academica_postulante[]
+}
+
+
+model usuarios_administrativos {
+  id                  String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  ci                  String    @unique @db.VarChar(20)
+  nombres             String    @db.VarChar(100)
+  apellidos           String    @db.VarChar(100)
+  email               String    @unique @db.VarChar(150)
+  cargo               String    @db.VarChar(150)
+  departamento_unidad String    @default("GERENCIA DE GESTIÓN DE TALENTO HUMANO") @db.VarChar(150)
+  departamento_id     String?   @db.Uuid
+  password_hash       String    @db.VarChar(255)
+  rol                 String    @default("ADMIN_RRHH") @db.VarChar(50)
+  activo              Boolean   @default(true)
+  ultimo_acceso       DateTime? @db.Timestamptz(6)
+  created_at          DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at          DateTime? @default(now()) @db.Timestamptz(6)
+
+  solicitudes_pasante_supervisor solicitudes_pasante_supervisor[]
+  notificaciones_administrativas notificaciones_administrativas[]
+  pasantes_supervisados          pasantes_activos[]
+  auditoria_logs                 auditoria_logs[]
+  reportes_comportamiento_registrados reportes_comportamiento_pasante[]
+
+  departamentos departamentos? @relation(fields: [departamento_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([departamento_id], map: "idx_usuarios_administrativos_departamento")
+}
+
+enum estado_civil_enum {
+  SOLTERO
+  CASADO
+  OTRO
+}
+
+enum estado_pasante_activo_enum {
+  ACTIVO
+  FINALIZADO
+  ABANDONO
+  SUSPENDIDO
+}
+
+enum estado_postulacion_enum {
+  REGISTRADO
+  EN_EVALUACION_RRHH
+  SELECCIONADO_POR_AREA
+  APROBADO_PARA_ENTREVISTA
+  ACEPTADO
+  RECHAZADO
+  HABILITADO
+  APROBADO
+  OBSERVADO
+  DESISTIDO
+  NO_SELECCIONADO
+}
+
+enum estado_solicitud_area_enum {
+  PENDIENTE
+  EN_REVISION_RRHH
+  CONCLUIDO
+  CANCELADO
+}
+
+enum estado_tramite_enum {
+  PENDIENTE
+  EN_PROCESO
+  APROBADO
+  RECHAZADO
+}
+
+enum genero_enum {
+  MASCULINO
+  FEMENINO
+}
+
+enum estado_solicitud_pasante_enum {
+  PENDIENTE_RRHH
+  APROBADA
+  RECHAZADA
+  CANCELADA
+}
+enum tipo_reporte_comportamiento_enum {
+  OBSERVACION
+  RECONOCIMIENTO
+  INCIDENTE
+  EVALUACION
+}
+
+
+
+model solicitudes_pasante_supervisor {
+  id                  String                         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  supervisor_id       String                         @db.Uuid
+  departamento_id     String                         @db.Uuid
+  postulacion_id      String                         @db.Uuid
+  actividades_pasante String                         @db.Text
+
+  estado              estado_solicitud_pasante_enum @default(PENDIENTE_RRHH)
+
+  respuesta_rrhh      String?                        @db.Text
+  fecha_resolucion    DateTime?                      @db.Timestamptz(6)
+
+  created_at          DateTime                       @default(now()) @db.Timestamptz(6)
+  updated_at          DateTime                       @default(now()) @db.Timestamptz(6)
+
+  motivo_cancelacion  String?                        @db.Text
+  fecha_cancelacion   DateTime?                      @db.Timestamptz(6)
+
+  usuarios_administrativos usuarios_administrativos @relation(fields: [supervisor_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  departamentos             departamentos             @relation(fields: [departamento_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  postulaciones             postulaciones             @relation(fields: [postulacion_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  notificaciones_administrativas notificaciones_administrativas[]
+  pasante_activo pasantes_activos?
+ 
+  @@index([supervisor_id], map: "idx_solicitud_pasante_supervisor")
+  @@index([departamento_id], map: "idx_solicitud_pasante_departamento")
+  @@index([postulacion_id], map: "idx_solicitud_pasante_postulacion")
+  @@index([estado], map: "idx_solicitud_pasante_estado")
+}
+
+
+model postulaciones {
+  id             String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  postulante_id  String    @db.Uuid
+  numero_intento Int       @default(1)
+  fecha_inicio   DateTime  @default(now()) @db.Timestamptz(6)
+  fecha_cierre   DateTime? @db.Timestamptz(6)
+  created_at     DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime  @default(now()) @db.Timestamptz(6)
+
+  postulantes postulantes @relation(fields: [postulante_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_postulaciones_postulante")
+
+  documentos_postulante         documentos_postulante[]
+  estados_postulacion           estados_postulacion?
+  solicitudes_pasante_supervisor solicitudes_pasante_supervisor[]
+  historial_estados_postulacion historial_estados_postulacion[]
+
+  @@unique([postulante_id, numero_intento], map: "uq_postulante_numero_intento")
+  @@index([postulante_id], map: "idx_postulaciones_postulante_id")
+}
+
+model reportes_comportamiento_pasante {
+  id            String                             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pasante_id    String                             @db.Uuid
+  supervisor_id String                             @db.Uuid
+  tipo          tipo_reporte_comportamiento_enum
+  titulo        String                             @db.VarChar(150)
+  descripcion   String                             @db.Text
+  fecha_reporte DateTime                           @default(dbgenerated("CURRENT_DATE")) @db.Date
+  created_at    DateTime                           @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime                           @default(now()) @db.Timestamptz(6)
+
+  pasantes_activos          pasantes_activos          @relation(fields: [pasante_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  usuarios_administrativos usuarios_administrativos @relation(fields: [supervisor_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([pasante_id], map: "idx_reporte_comportamiento_pasante")
+  @@index([supervisor_id], map: "idx_reporte_comportamiento_supervisor")
+  @@index([fecha_reporte], map: "idx_reporte_comportamiento_fecha")
+  @@index([tipo], map: "idx_reporte_comportamiento_tipo")
+}
+
+
+enum institucion_tipo_enum {
+  UNIVERSIDAD
+  INSTITUTO_TECNICO
+}
+
+enum modalidad_pasantia_enum {
+  PASANTIA
+  PROYECTO_DE_GRADO
+  TRABAJO_DIRIGIDO
+  EXCELENCIA_ACADEMICA
+  OTRO
+}
+
+enum rol_usuario_enum {
+  SUPER_ADMIN
+  TALENTO_HUMANO
+  JEFE_AREA
+  SUPERVISOR
+  POSTULANTE
+  PASANTE
+}
+
+enum talla_chamarra_enum {
+  S
+  M
+  L
+  XL
+  XXL
+  NO_ENTREGADO
+}
+
+enum tipo_documento_postulacion_enum {
+  CARTA_SOLICITUD
+  RECORD_ACADEMICO
+  HOJA_DE_VIDA
+  FOTOCOPIA_CI
+  FACTURA_SERVICIO_BASICO
+  CROQUIS_DOMICILIO
+  REFERENCIAS_PERSONALES
+}
+
+enum tipo_tramite_pasante_enum {
+  ANULACION_TARJETA_EXTRAVIO
+  REPOSICION_TARJETA
+  SOLICITUD_CERTIFICADO
+  DEVOLUCION_CHAMARRA
+}
+
+enum turno_disponibilidad_enum {
+  MANANA
+  TARDE
+  TIEMPO_COMPLETO
+}
+
+model historial_estados_postulacion {
+  id              String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  postulacion_id  String                   @db.Uuid
+  estado_anterior estado_postulacion_enum?
+  estado_nuevo    estado_postulacion_enum
+  observacion     String?
+  created_at      DateTime                 @default(now()) @db.Timestamptz(6)
+
+  postulaciones postulaciones @relation(fields: [postulacion_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_historial_postulacion")
+
+  @@index([postulacion_id, created_at], map: "idx_historial_postulacion_fecha")
+}
+
+
+model gerencias {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nombre     String   @unique @db.VarChar(150)
+  activo     Boolean  @default(true)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+
+  departamentos departamentos[]
+}
+
+model departamentos {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  gerencia_id String   @db.Uuid
+  nombre      String   @db.VarChar(150)
+  activo      Boolean  @default(true)
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime @default(now()) @db.Timestamptz(6)
+
+  gerencias gerencias @relation(fields: [gerencia_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  usuarios_administrativos        usuarios_administrativos[]
+  pasantes_activos                pasantes_activos[]
+  perfiles_personal               perfiles_personal[]
+  solicitudes_requerimiento_area  solicitudes_requerimiento_area[]
+  solicitudes_pasante_supervisor  solicitudes_pasante_supervisor[]
+
+  @@unique([gerencia_id, nombre], map: "uq_departamento_gerencia")
+  @@index([gerencia_id], map: "idx_departamentos_gerencia_id")
+  @@index([activo], map: "idx_departamentos_activo")
+}
+
+model notificaciones_administrativas {
+  id                       String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  usuario_administrativo_id String  @db.Uuid
+  solicitud_pasante_id     String?  @db.Uuid
+
+  tipo                     String   @db.VarChar(60)
+  titulo                   String   @db.VarChar(180)
+  mensaje                  String   @db.Text
+
+  leida                    Boolean  @default(false)
+  fecha_leida              DateTime? @db.Timestamptz(6)
+
+  created_at               DateTime @default(now()) @db.Timestamptz(6)
+
+  usuario_administrativo usuarios_administrativos @relation(fields: [usuario_administrativo_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  solicitud_pasante      solicitudes_pasante_supervisor? @relation(fields: [solicitud_pasante_id], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@index([usuario_administrativo_id], map: "idx_notificaciones_usuario")
+  @@index([solicitud_pasante_id], map: "idx_notificaciones_solicitud")
+  @@index([usuario_administrativo_id, leida, created_at], map: "idx_notificaciones_usuario_leida")
+}
